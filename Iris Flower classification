@@ -1,0 +1,41 @@
+# Importing necessary libraries
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, classification_report
+
+# Load the dataset (Assuming you have a dataset in CSV format)
+# Replace 'iris_data.csv' with your actual dataset file
+df = pd.read_csv('iris_data.csv')
+
+# Assuming 'sepal_length', 'sepal_width', 'petal_length', 'petal_width' as features and 'species' as target variable
+X = df[['sepal_length', 'sepal_width', 'petal_length', 'petal_width']]
+y = df['species']
+
+# Splitting the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Initialize the Logistic Regression model
+model = LogisticRegression()
+
+# Train the model
+model.fit(X_train, y_train)
+
+# Predict species
+y_pred = model.predict(X_test)
+
+# Calculate accuracy
+accuracy = accuracy_score(y_test, y_pred)
+
+# Print the accuracy
+print(f"Accuracy: {accuracy}")
+
+# Generate classification report
+report = classification_report(y_test, y_pred)
+print(report)
+
+# Now, you can use this trained model to predict species using new data
+# For example:
+new_data = [[5.1, 3.5, 1.4, 0.2], [6.4, 3.2, 4.5, 1.5]]  # Replace with your own data
+predicted_species = model.predict(new_data)
+print(f"Predicted Species: {predicted_species}")
